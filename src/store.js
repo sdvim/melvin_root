@@ -10,13 +10,17 @@ export default new Vuex.Store({
     stats: {}
   },
   mutations: {
+    SET_STATS: (state, stats) => {
+      state.stats = stats;
+    },
     SET_STRINGS: (state, strings) => {
       state.strings = strings;
     }
   },
   actions: {
-    setStrings() {
+    setData() {
       axios.get("https://api.npoint.io/5fdb935a883cea4b4c10").then(response => {
+        this.commit("SET_STATS", response.data.stats);
         this.commit("SET_STRINGS", response.data.strings);
       });
     }

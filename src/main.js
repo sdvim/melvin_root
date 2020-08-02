@@ -10,7 +10,7 @@ new Vue({
   router,
   store,
   created() {
-    this.$store.dispatch("setStrings");
+    this.$store.dispatch("setData");
   },
   computed: {
     strings() {
