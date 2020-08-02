@@ -1,14 +1,39 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">{{ $root.strings.nav_tab_1 }}</router-link> |
-      <router-link to="/melvin">{{ $root.strings.nav_tab_2 }}</router-link> |
-      <router-link to="/family">{{ $root.strings.nav_tab_3 }}</router-link> |
-      <router-link to="/connections">{{ $root.strings.nav_tab_4 }}</router-link>
-    </nav>
-    <router-view />
+    <header>
+      <h1>{{ $root.strings.nav_title }}</h1>
+      <nav>
+        <router-link
+          v-for="(nav, index) in navItems"
+          :key="nav"
+          :to="nav"
+          :class="{ focus: $route.path === nav }"
+        >
+          {{ $root.strings[`nav_tab_${index + 1}`] }}
+        </router-link>
+      </nav>
+    </header>
+    <main>
+      <router-view />
+    </main>
+    <footer>
+      <span>{{ $root.strings.footer_version }}</span>
+      <span>{{ $root.strings.footer_copyright }}</span>
+      <span>{{ $root.strings.footer_company }}</span>
+    </footer>
   </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      navItems: ["/", "/melvin", "/family", "/connections"]
+    };
+  }
+};
+</script>
 
 <style lang="scss">
 @font-face {
@@ -18,16 +43,73 @@
   font-style: normal;
 }
 
-#app {
+html {
+  background: grey;
+  color: white;
+  box-sizing: border-box;
   font-family: "IBM VGA 8x16", monospace;
   font-weight: normal;
   font-size: 16px;
+  line-height: 1;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
 }
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  color: inherit;
   font-size: inherit;
   font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background: blue;
+  padding: 1em 2ch 0;
+  h1 {
+    text-align: center;
+  }
+  a {
+    margin-right: 1ch;
+    &:last-child {
+      margin-right: 0;
+    }
+    &::before {
+      content: "[ ";
+    }
+    &::after {
+      content: " ]";
+    }
+    &:focus,
+    &.focus {
+      background: grey;
+    }
+  }
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background: blue;
+  text-decoration: none;
+  padding: 1em 2ch 1em;
+  text-align: right;
 }
 </style>
