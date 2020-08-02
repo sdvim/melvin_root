@@ -14,6 +14,8 @@
       </nav>
     </header>
     <main>
+      <h2>{{ currentPage.extended_title }}</h2>
+      <hr />
       <router-view />
     </main>
     <footer class="footer">
@@ -40,6 +42,10 @@
 export default {
   name: "App",
   computed: {
+    currentPage() {
+      // HACK: should probably be refactored into router
+      return this.pages.find(page => page.path === this.$route.path);
+    },
     pages() {
       return this.$store.state.pages;
     }
@@ -96,6 +102,14 @@ ol {
   list-style: none;
 }
 
+hr {
+  border: none;
+  background: linear-gradient(to right, var(--fg-color), var(--fg-color))
+    no-repeat center;
+  background-size: 100% 2px;
+  height: 2em;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -126,9 +140,15 @@ header {
   }
 }
 
+@mixin border {
+  padding: 1em 1ch;
+  margin: 1em 1ch;
+  box-shadow: 0 0 0 1px inset var(--fg-color), 0 0 0 1px var(--fg-color);
+}
+
 main {
+  @include border;
   flex: 1;
-  padding: 1em 2ch;
 }
 
 .footer {
