@@ -8,7 +8,9 @@
         :tabindex="index + 100"
       >
         <span class="stat__title">{{ stat.title }}</span>
-        <span class="stat__value">{{ stat.value }}</span>
+        <span class="stat__value">{{
+          Number(stat.value).toLocaleString()
+        }}</span>
       </li>
     </ul>
   </div>
