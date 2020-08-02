@@ -55,8 +55,15 @@ export default {
   font-style: normal;
 }
 
+:root {
+  --bg-color: grey;
+  --fg-color: blue;
+  --text-color: white;
+  --highlight-color: yellow;
+}
+
 html {
-  background: grey;
+  background: var(--bg-color);
   color: white;
   box-sizing: border-box;
   font-family: "IBM VGA 8x16", monospace;
@@ -96,7 +103,7 @@ ol {
 }
 
 header {
-  background: blue;
+  background: var(--fg-color);
   padding: 1em 2ch 0;
   h1 {
     text-align: center;
@@ -114,7 +121,7 @@ header {
     }
     &:focus,
     &.focus {
-      background: grey;
+      background: var(--bg-color);
     }
   }
 }
@@ -125,7 +132,7 @@ main {
 }
 
 .footer {
-  background: blue;
+  background: var(--fg-color);
   text-decoration: none;
   padding: 1em 2ch 1em;
   display: flex;
@@ -139,7 +146,7 @@ main {
       margin-right: 0;
     }
     &__key {
-      color: grey;
+      color: var(--bg-color);
       &::after {
         content: ": ";
       }

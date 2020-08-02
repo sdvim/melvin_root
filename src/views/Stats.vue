@@ -43,12 +43,12 @@ ul {
     margin-bottom: 0;
   }
   &:focus &__value {
-    background: yellow;
-    color: grey;
+    background: var(--highlight-color);
+    color: var(--bg-color);
   }
   &__title {
     padding-right: 1ch;
-    background: grey;
+    background: var(--bg-color);
 
     &::before {
       content: "\25B8";
@@ -58,7 +58,7 @@ ul {
   &__value {
     float: right;
     padding-left: 1ch;
-    background: grey;
+    background: var(--bg-color);
   }
   &::before {
     float: left;
