@@ -104,6 +104,7 @@ header {
 
 main {
   flex: 1;
+  padding: 1em 2ch;
 }
 
 footer {
