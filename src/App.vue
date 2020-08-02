@@ -9,19 +9,28 @@
 </template>
 
 <style lang="scss">
+@font-face {
+  font-family: "IBM VGA 8x16";
+  src: url(/fonts/Web_IBM_VGA_8x16.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  font-family: "IBM VGA 8x16", monospace;
+  font-weight: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
+
+* {
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 #nav {
-  padding: 30px;
-
   a {
-    font-weight: bold;
     color: #2c3e50;
 
     &.router-link-exact-active {
