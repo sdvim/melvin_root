@@ -16,10 +16,22 @@
     <main>
       <router-view />
     </main>
-    <footer>
-      <span>{{ $root.strings.footer_version }}</span>
-      <span>{{ $root.strings.footer_copyright }}</span>
-      <span>{{ $root.strings.footer_company }}</span>
+    <footer class="footer">
+      <ul class="footer__keys">
+        <li
+          v-for="(title, key) in $root.strings.footer_keys"
+          :key="`key-${key}`"
+          class="shortcut"
+        >
+          <span class="shortcut__key" v-html="key">{{ key }}</span>
+          <span class="shortcut__title">{{ title }}</span>
+        </li>
+      </ul>
+      <div class="footer__info">
+        <span>{{ $root.strings.footer_version }}</span>
+        <span>{{ $root.strings.footer_copyright }}</span>
+        <span>{{ $root.strings.footer_company }}</span>
+      </div>
     </footer>
   </div>
 </template>
@@ -72,6 +84,11 @@ a {
   text-decoration: none;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -107,10 +124,26 @@ main {
   padding: 1em 2ch;
 }
 
-footer {
+.footer {
   background: blue;
   text-decoration: none;
   padding: 1em 2ch 1em;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  &__keys {
+    display: flex;
+  }
+  .shortcut {
+    margin-right: 5ch;
+    &:last-child {
+      margin-right: 0;
+    }
+    &__key {
+      color: grey;
+      &::after {
+        content: ": ";
+      }
+    }
+  }
 }
 </style>
