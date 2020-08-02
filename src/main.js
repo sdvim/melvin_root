@@ -9,5 +9,13 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  created() {
+    this.$store.dispatch("setStrings");
+  },
+  computed: {
+    strings() {
+      return this.$store.state.strings;
+    }
+  },
   render: h => h(App)
 }).$mount("#app");
