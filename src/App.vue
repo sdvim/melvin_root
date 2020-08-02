@@ -4,12 +4,12 @@
       <h1>{{ $root.strings.nav_title }}</h1>
       <nav>
         <router-link
-          v-for="(nav, index) in navItems"
-          :key="nav"
-          :to="nav"
-          :class="{ focus: $route.path === nav }"
+          v-for="page in pages"
+          :key="`page-${page.title}`"
+          :to="page.path"
+          :class="{ focus: $route.path === page.path }"
         >
-          {{ $root.strings[`nav_tab_${index + 1}`] }}
+          {{ page.title }}
         </router-link>
       </nav>
     </header>
@@ -27,10 +27,10 @@
 <script>
 export default {
   name: "App",
-  data() {
-    return {
-      navItems: ["/", "/melvin", "/family", "/connections"]
-    };
+  computed: {
+    pages() {
+      return this.$store.state.pages;
+    }
   }
 };
 </script>
