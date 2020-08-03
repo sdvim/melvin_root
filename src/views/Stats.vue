@@ -2,13 +2,14 @@
   <div>
     <ul>
       <li
-        class="stat"
         v-for="(stat, index) in stats"
+        class="stat"
+        :class="stat.type === 'heading' ? 'stat--heading' : 'stat--detailed'"
         :key="`stat-${index}`"
         :tabindex="index + 100"
       >
         <span class="stat__title">{{ stat.title }}</span>
-        <span class="stat__value">{{ normalize(stat) }}</span>
+        <span class="stat__value" v-if="stat.value">{{ normalize(stat) }}</span>
       </li>
     </ul>
   </div>
@@ -91,7 +92,11 @@ ul {
     padding-right: 1ch;
     background: var(--bg-color);
 
-    &::before {
+    @at-root .stat--heading {
+      color: var(--text-color);
+    }
+
+    @at-root .stat--detailed &::before {
       content: "\25B8";
       margin-right: 1ch;
     }
@@ -105,6 +110,14 @@ ul {
     float: left;
     width: 0;
     white-space: nowrap;
+  }
+  &--heading::before {
+    content: "----------------------------------------"
+      "----------------------------------------"
+      "----------------------------------------"
+      "----------------------------------------";
+  }
+  &--detailed::before {
     content: "........................................"
       "........................................"
       "........................................"
