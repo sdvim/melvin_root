@@ -67,6 +67,7 @@ export default {
   --bg-color: grey;
   --fg-color: blue;
   --text-color: white;
+  --body-text-color: black;
   --highlight-color: yellow;
 }
 
@@ -151,6 +152,7 @@ header {
 main {
   @include border;
   flex: 1;
+  color: var(--body-text-color);
 }
 
 .footer {
