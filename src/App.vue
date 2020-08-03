@@ -44,7 +44,9 @@ export default {
   computed: {
     currentPage() {
       // HACK: should probably be refactored into router
-      return this.pages.find(page => page.path === this.$route.path);
+      return this.pages.length > 0
+        ? this.pages.find(page => page.path === this.$route.path)
+        : {};
     },
     pages() {
       return this.$store.state.pages;
