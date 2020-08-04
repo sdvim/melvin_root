@@ -58,22 +58,28 @@ export default {
       const horizontalKeys = ["ArrowRight", "ArrowLeft"];
       const verticalKeys = ["ArrowDown", "ArrowUp"];
       if ([...horizontalKeys, ...verticalKeys].includes(event.key)) {
-        const el = horizontalKeys.includes(event.key) ? "nav a" : ".stat";
-        let target = this.$el.querySelector(`${el}.focus`);
-        if (!target) return false;
+        const selector = horizontalKeys.includes(event.key)
+          ? "nav a"
+          : ".stat:not(.stat--heading)";
+        const items = document.querySelectorAll(selector);
+        let i;
+        for (i = 0; i < items.length; i++) {
+          if (items[i].classList.contains("focus")) break;
+        }
+        if (!items[i]) return false;
         switch (event.key) {
           case "ArrowDown":
           case "ArrowRight":
-            target = target.nextSibling;
-            if (!target) target = this.$el.querySelector(`${el}:first-child`);
+            i++;
+            if (!items[i]) i = 0;
             break;
           case "ArrowUp":
           case "ArrowLeft":
-            target = target.previousSibling;
-            if (!target) target = this.$el.querySelector(`${el}:last-child`);
+            i--;
+            if (!items[i]) i = items.length - 1;
             break;
         }
-        target.click();
+        items[i].click();
       }
     }
   },

@@ -6,7 +6,7 @@
         class="stat"
         :class="[
           stat.type === 'heading' ? 'stat--heading' : 'stat--detailed',
-          index === 0 ? 'focus' : ''
+          index === 1 ? 'focus' : ''
         ]"
         :key="`stat-${index}`"
         :tabindex="-1"

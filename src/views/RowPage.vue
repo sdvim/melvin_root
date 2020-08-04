@@ -1,13 +1,14 @@
 <template>
   <div>
     <ul v-for="(row, index) in rows" :key="`stat-${index}`">
-      <li class="stat stat--heading" :class="index === 0 ? 'focus' : ''">
+      <li class="stat stat--heading">
         <span class="stat__title">{{ row.title }}</span>
         <span class="stat__value" v-if="row.value">{{ normalize(row) }}</span>
       </li>
       <li
         v-for="(item, itemIndex) in row.items"
         class="stat stat--detailed"
+        :class="index === 0 && itemIndex === 0 ? 'focus' : ''"
         :key="`row-item-${itemIndex}`"
         :tabindex="-1"
         @click="setFocused"
