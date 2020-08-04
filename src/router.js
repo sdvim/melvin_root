@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Stats from "./views/Stats";
+import RowPage from "./views/RowPage";
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes = [
     path: "/",
     name: "Stats",
     component: Stats
+  },
+  {
+    path: "/melvin",
+    name: "Melvin",
+    component: RowPage
   }
   // {
   //   path: "/about",
