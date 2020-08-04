@@ -201,7 +201,7 @@ main {
       margin-right: 0;
     }
     &__key {
-      color: var(--bg-color);
+      color: var(--body-text-color);
       &::after {
         content: ": ";
       }
