@@ -5,6 +5,7 @@
       <nav>
         <router-link
           v-for="page in pages"
+          tabindex="-1"
           :key="`page-${page.title}`"
           :to="page.path"
           :class="{ focus: $route.path === page.path }"
@@ -51,6 +52,36 @@ export default {
     pages() {
       return this.$store.state.pages;
     }
+  },
+  methods: {
+    navigate(event) {
+      const horizontalKeys = ["ArrowRight", "ArrowLeft"];
+      const verticalKeys = ["ArrowDown", "ArrowUp"];
+      if ([...horizontalKeys, ...verticalKeys].includes(event.key)) {
+        const el = horizontalKeys.includes(event.key) ? "nav a" : ".stat";
+        let target = this.$el.querySelector(`${el}.focus`);
+        if (!target) return false;
+        switch (event.key) {
+          case "ArrowDown":
+          case "ArrowRight":
+            target = target.nextSibling;
+            if (!target) target = this.$el.querySelector(`${el}:first-child`);
+            break;
+          case "ArrowUp":
+          case "ArrowLeft":
+            target = target.previousSibling;
+            if (!target) target = this.$el.querySelector(`${el}:last-child`);
+            break;
+        }
+        target.click();
+      }
+    }
+  },
+  created() {
+    window.addEventListener("keydown", this.navigate);
+  },
+  destroyed() {
+    window.removeEventListener("keydown", this.navigate);
   }
 };
 </script>

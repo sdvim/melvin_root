@@ -4,9 +4,13 @@
       <li
         v-for="(stat, index) in stats"
         class="stat"
-        :class="stat.type === 'heading' ? 'stat--heading' : 'stat--detailed'"
+        :class="[
+          stat.type === 'heading' ? 'stat--heading' : 'stat--detailed',
+          index === 0 ? 'focus' : ''
+        ]"
         :key="`stat-${index}`"
-        :tabindex="index + 100"
+        :tabindex="-1"
+        @click="setFocused"
       >
         <span class="stat__title">{{ stat.title }}</span>
         <span class="stat__value" v-if="stat.value">{{ normalize(stat) }}</span>
@@ -67,6 +71,10 @@ export default {
         }
       }
       return result;
+    },
+    setFocused(e) {
+      this.$el.querySelector(".focus").classList.remove("focus");
+      e.target.classList.add("focus");
     }
   }
 };
@@ -82,9 +90,9 @@ ul {
   &:last-child {
     margin-bottom: 0;
   }
-  &:focus,
-  &:focus &__title,
-  &:focus &__value {
+  &.focus,
+  &.focus &__title,
+  &.focus &__value {
     background: var(--highlight-color);
     color: var(--bg-color);
   }

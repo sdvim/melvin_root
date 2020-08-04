@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul v-for="(row, index) in rows" :key="`stat-${index}`">
-      <li class="stat stat--heading">
+      <li class="stat stat--heading" :class="index === 0 ? 'focus' : ''">
         <span class="stat__title">{{ row.title }}</span>
         <span class="stat__value" v-if="row.value">{{ normalize(row) }}</span>
       </li>
@@ -9,7 +9,8 @@
         v-for="(item, itemIndex) in row.items"
         class="stat stat--detailed"
         :key="`row-item-${itemIndex}`"
-        :tabindex="index * 100 + itemIndex"
+        :tabindex="-1"
+        @click="setFocused"
       >
         <span class="stat__title">{{ item.title }}</span>
         <span class="stat__value" v-if="item.value !== undefined">{{
@@ -89,6 +90,10 @@ export default {
         }
       }
       return result;
+    },
+    setFocused(e) {
+      this.$el.querySelector(".focus").classList.remove("focus");
+      e.target.classList.add("focus");
     }
   }
 };
@@ -101,9 +106,9 @@ ul {
 }
 .stat {
   margin-bottom: 1em;
-  &:focus,
-  &:focus &__title,
-  &:focus &__value {
+  &.focus,
+  &.focus &__title,
+  &.focus &__value {
     background: var(--highlight-color);
     color: var(--bg-color);
   }
