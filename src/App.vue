@@ -65,7 +65,7 @@ export default {
 
 :root {
   --bg-color: grey;
-  --fg-color: blue;
+  --fg-color: red;
   --text-color: white;
   --body-text-color: black;
   --highlight-color: yellow;
