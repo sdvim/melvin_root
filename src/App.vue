@@ -173,7 +173,6 @@ header {
     &::after {
       content: " ]";
     }
-    &:focus,
     &.focus {
       background: var(--bg-color);
     }
