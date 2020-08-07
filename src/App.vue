@@ -71,6 +71,17 @@ export default {
       const verticalKeys = ["ArrowDown", "ArrowUp"];
       if (
         !this.currentPrompt &&
+        event.key === "Reset" &&
+        document.querySelector(".stat")
+      ) {
+        document.querySelector(".stat.focus").classList.remove("focus");
+        document
+          .querySelectorAll(".stat:not(.stat--heading)")[0]
+          .classList.add("focus");
+        return;
+      }
+      if (
+        !this.currentPrompt &&
         [...horizontalKeys, ...verticalKeys].includes(event.key)
       ) {
         const selector = horizontalKeys.includes(event.key)
@@ -95,6 +106,9 @@ export default {
             break;
         }
         items[i].click();
+        if (horizontalKeys.includes(event.key)) {
+          this.navigate({ key: "Reset" });
+        }
         return;
       }
       if (promptKeys.includes(event.key)) {
