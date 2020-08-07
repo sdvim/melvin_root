@@ -4,7 +4,7 @@
       <h2 class="prompt__title">Update {{ currentPrompt.property }}:</h2>
       <input
         class="prompt__input"
-        type="text"
+        v-bind="inputProps"
         v-model="currentPrompt.value"
         ref="input"
       />
@@ -21,6 +21,21 @@ export default {
   name: "Prompt",
   props: {
     currentPrompt: Object
+  },
+  computed: {
+    inputProps() {
+      let props = {};
+      switch (this.currentPrompt.type) {
+        case "number":
+          // TODO: add min, max, step
+          props = { type: "number" };
+          break;
+        default:
+          props = { type: "text" };
+          break;
+      }
+      return props;
+    }
   },
   mounted() {
     this.$refs.input.focus();
