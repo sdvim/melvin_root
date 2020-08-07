@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Prompt from "./components/Prompt.vue";
 
 export default {
@@ -65,6 +66,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["updateRow"]),
     navigate(event) {
       const promptKeys = ["Enter", "Escape"];
       const horizontalKeys = ["ArrowRight", "ArrowLeft"];
@@ -126,7 +128,10 @@ export default {
         }
         if (this.currentPrompt) {
           if (event.key === "Enter") {
-            console.debug(this.currentPrompt.value);
+            // HACK: sloppy dom traversal, could be much cleaner!
+            const sectionTitle = document.querySelector(".stat.focus")
+              .parentElement.firstElementChild.textContent;
+            this.updateRow({ ...this.currentPrompt, sectionTitle });
             this.currentPrompt = null;
             return;
           }

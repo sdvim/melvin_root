@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import router from "./router.js";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,12 @@ export default new Vuex.Store({
     },
     SET_STRINGS: (state, strings) => {
       state.strings = strings;
+    },
+    UPDATE_ROW: (state, updatedRow) => {
+      const page = state.pages.find(p => p.title === router.currentRoute.name);
+      const section = page.rows.find(s => s.title === updatedRow.sectionTitle);
+      const item = section.items.find(i => i.title === updatedRow.property);
+      item.value = updatedRow.value;
     }
   },
   actions: {
@@ -23,6 +30,9 @@ export default new Vuex.Store({
         this.commit("SET_PAGES", response.data.pages);
         this.commit("SET_STRINGS", response.data.strings);
       });
+    },
+    updateRow({ commit }, row) {
+      commit("UPDATE_ROW", row);
     }
   },
   modules: {}
