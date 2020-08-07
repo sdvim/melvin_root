@@ -14,9 +14,13 @@
         @click="setFocused"
       >
         <span class="stat__title">{{ item.title }}</span>
-        <span class="stat__value" v-if="item.value !== undefined">{{
-          normalize(item)
-        }}</span>
+        <span
+          class="stat__value"
+          v-if="item.value !== undefined"
+          :data-type="item.type"
+          :data-value="item.value"
+          >{{ normalize(item) }}</span
+        >
       </li>
     </ul>
   </div>

@@ -36,12 +36,23 @@
         <span>{{ $root.strings.footer_company }}</span>
       </div>
     </footer>
+    <Prompt v-if="currentPrompt" :currentPrompt="currentPrompt" />
   </div>
 </template>
 
 <script>
+import Prompt from "./components/Prompt.vue";
+
 export default {
   name: "App",
+  components: {
+    Prompt
+  },
+  data() {
+    return {
+      currentPrompt: null
+    };
+  },
   computed: {
     currentPage() {
       // HACK: should probably be refactored into router
@@ -55,9 +66,13 @@ export default {
   },
   methods: {
     navigate(event) {
+      const promptKeys = ["Enter", "Escape"];
       const horizontalKeys = ["ArrowRight", "ArrowLeft"];
       const verticalKeys = ["ArrowDown", "ArrowUp"];
-      if ([...horizontalKeys, ...verticalKeys].includes(event.key)) {
+      if (
+        !this.currentPrompt &&
+        [...horizontalKeys, ...verticalKeys].includes(event.key)
+      ) {
         const selector = horizontalKeys.includes(event.key)
           ? "nav a"
           : ".stat:not(.stat--heading)";
@@ -80,6 +95,32 @@ export default {
             break;
         }
         items[i].click();
+        return;
+      }
+      if (promptKeys.includes(event.key)) {
+        if (!this.currentPrompt && event.key === "Enter") {
+          const item = document.querySelector(".stat.focus");
+          const property = item.querySelector(".stat__title").textContent;
+          const value = item
+            .querySelector(".stat__value")
+            .getAttribute("data-value");
+          const type = item
+            .querySelector(".stat__value")
+            .getAttribute("data-type");
+          this.currentPrompt = { property, value, type };
+          return;
+        }
+        if (this.currentPrompt) {
+          if (event.key === "Enter") {
+            console.debug(this.currentPrompt.value);
+            this.currentPrompt = null;
+            return;
+          }
+          if (event.key === "Escape") {
+            this.currentPrompt = null;
+            return;
+          }
+        }
       }
     }
   },
@@ -105,6 +146,7 @@ export default {
   --fg-color: red;
   --text-color: white;
   --body-text-color: black;
+  --overlay-color: rgba(0, 0, 0, 0.9);
   --highlight-color: yellow;
 }
 
@@ -128,6 +170,7 @@ html {
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
+  border: 0;
   margin: 0;
   padding: 0;
   outline: none;
@@ -140,6 +183,12 @@ a {
 ul,
 ol {
   list-style: none;
+}
+
+input {
+  color: var(--body-text-color);
+  font-family: inherit;
+  text-align: right;
 }
 
 hr {
