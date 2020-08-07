@@ -7,15 +7,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     pages: [],
-    strings: {},
-    stats: {}
+    strings: {}
   },
   mutations: {
     SET_PAGES: (state, pages) => {
       state.pages = pages;
-    },
-    SET_STATS: (state, stats) => {
-      state.stats = stats;
     },
     SET_STRINGS: (state, strings) => {
       state.strings = strings;
@@ -25,7 +21,6 @@ export default new Vuex.Store({
     setData() {
       axios.get("https://api.npoint.io/72bda29bf37b679bf564").then(response => {
         this.commit("SET_PAGES", response.data.pages);
-        this.commit("SET_STATS", response.data.stats);
         this.commit("SET_STRINGS", response.data.strings);
       });
     }
