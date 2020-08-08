@@ -53,6 +53,11 @@ export default {
             case "mi":
               result = `${Number(stat.value).toLocaleString()} ${stat.unit}`;
               break;
+            case "%":
+              result = `${Number(stat.value).toLocaleString(undefined, {
+                minimumFractionDigits: 2
+              })}%`;
+              break;
             case "USD":
               result = `USD ${Number(stat.value).toLocaleString(undefined, {
                 minimumFractionDigits: 2
