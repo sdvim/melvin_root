@@ -108,6 +108,7 @@ export default {
             break;
         }
         items[i].click();
+        items[i].scrollIntoView(false);
         if (horizontalKeys.includes(event.key)) {
           this.navigate({ key: "Reset" });
         }
@@ -221,7 +222,8 @@ hr {
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 header {
@@ -250,13 +252,36 @@ header {
 @mixin border {
   padding: 1em 1ch;
   margin: 1em 1ch;
-  box-shadow: 0 0 0 1px inset var(--fg-color), 0 0 0 1px var(--fg-color);
+  border: 2px solid var(--fg-color);
 }
 
 main {
   @include border;
   flex: 1;
   color: var(--body-text-color);
+  overflow: hidden;
+  padding-right: 0;
+  > div {
+    height: 100%;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 1ch;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--fg-color);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--text-color);
+    }
+
+    &::-webkit-scrollbar-button {
+      background: var(--fg-color);
+      height: 1ch;
+      border-radius: 50%;
+    }
+  }
 }
 
 .footer {
