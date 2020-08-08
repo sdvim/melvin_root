@@ -173,7 +173,7 @@ export default {
   --fg-color: red;
   --text-color: white;
   --body-text-color: black;
-  --overlay-color: rgba(0, 0, 0, 0.9);
+  --overlay-color: rgba(128, 128, 128, 0.9);
   --highlight-color: yellow;
 }
 
