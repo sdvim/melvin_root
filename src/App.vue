@@ -108,9 +108,16 @@ export default {
             break;
         }
         items[i].click();
-        items[i].scrollIntoView(false);
         if (horizontalKeys.includes(event.key)) {
           this.navigate({ key: "Reset" });
+        }
+        if (verticalKeys.includes(event.key)) {
+          const view = document.querySelector("main > div");
+          const y =
+            items[i].offsetTop -
+            view.offsetTop -
+            Math.floor(view.offsetHeight / 2);
+          view.scroll(0, y);
         }
         return;
       }
@@ -180,6 +187,7 @@ html {
   line-height: 1;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
+  pointer-events: none;
 }
 
 *,
