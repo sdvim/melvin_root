@@ -205,7 +205,6 @@ html {
   line-height: 1;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
-  pointer-events: none;
 }
 
 *,
@@ -290,6 +289,7 @@ main {
   > div {
     height: 100%;
     overflow-y: auto;
+    pointer-events: none;
     &::-webkit-scrollbar {
       width: 1ch;
     }
