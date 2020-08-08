@@ -286,8 +286,10 @@ main {
   color: var(--body-text-color);
   overflow: hidden;
   padding-right: 0;
+  display: flex;
+  flex-direction: column;
   > div {
-    height: 100%;
+    flex: 1;
     overflow-y: auto;
     pointer-events: none;
     &::-webkit-scrollbar {
