@@ -14,6 +14,11 @@ const routes = [
     path: "/melvin",
     name: "Melvin",
     component: RowPage
+  },
+  {
+    path: "/network",
+    name: "Network",
+    component: RowPage
   }
   // {
   //   path: "/about",
