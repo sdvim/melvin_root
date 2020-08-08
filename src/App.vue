@@ -37,6 +37,9 @@
       </div>
     </footer>
     <Prompt v-if="currentPrompt" :currentPrompt="currentPrompt" />
+    <div v-if="blackout" class="blackout">
+      {{ $root.strings.blackout_text }}
+    </div>
   </div>
 </template>
 
@@ -51,6 +54,7 @@ export default {
   },
   data() {
     return {
+      blackout: false,
       currentPrompt: null
     };
   },
@@ -68,9 +72,10 @@ export default {
   methods: {
     ...mapActions(["updateRow"]),
     navigate(event) {
-      const promptKeys = ["Enter", "Escape"];
+      const promptKeys = ["Enter", "Escape", "Y", "N", "y", "n"];
       const horizontalKeys = ["ArrowRight", "ArrowLeft"];
       const verticalKeys = ["ArrowDown", "ArrowUp"];
+      if (this.blackout) this.blackout = false;
       if (
         !this.currentPrompt &&
         event.key === "Reset" &&
@@ -122,20 +127,27 @@ export default {
         return;
       }
       if (promptKeys.includes(event.key)) {
-        if (!this.currentPrompt && event.key === "Enter") {
-          const item = document.querySelector(".stat.focus");
-          const property = item.querySelector(".stat__title").textContent;
-          const value = item
-            .querySelector(".stat__value")
-            .getAttribute("data-value");
-          const values = item
-            .querySelector(".stat__value")
-            .getAttribute("data-values");
-          const type = item
-            .querySelector(".stat__value")
-            .getAttribute("data-type");
-          this.currentPrompt = { property, value, values, type };
-          return;
+        if (!this.currentPrompt) {
+          if (event.key === "Enter") {
+            const item = document.querySelector(".stat.focus");
+            const property = item.querySelector(".stat__title").textContent;
+            const value = item
+              .querySelector(".stat__value")
+              .getAttribute("data-value");
+            const values = item
+              .querySelector(".stat__value")
+              .getAttribute("data-values");
+            const type = item
+              .querySelector(".stat__value")
+              .getAttribute("data-type");
+            this.currentPrompt = { property, value, values, type };
+            return;
+          }
+          if (event.key === "Escape") {
+            const title = this.$root.strings.prompt_exit_title;
+            this.currentPrompt = { title };
+            return;
+          }
         }
         if (this.currentPrompt) {
           if (event.key === "Enter") {
@@ -146,7 +158,10 @@ export default {
             this.currentPrompt = null;
             return;
           }
-          if (event.key === "Escape") {
+          if (event.key.toLowerCase() === "y") {
+            this.blackout = true;
+          }
+          if (event.key === "Escape" || event.key.toLowerCase() === "n") {
             this.currentPrompt = null;
             return;
           }
@@ -156,16 +171,18 @@ export default {
         const radios = document.querySelectorAll(
           '.prompt__label input[type="radio"]'
         );
-        const delta = event.key === "ArrowUp" ? -1 : 1;
-        let i;
-        for (i = 0; i < radios.length; i++) {
-          if (radios[i].checked) {
-            radios[i].checked = false;
-            break;
+        if (radios.length > 0) {
+          const delta = event.key === "ArrowUp" ? -1 : 1;
+          let i;
+          for (i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+              radios[i].checked = false;
+              break;
+            }
           }
+          const index = Math.max(0, Math.min(i + delta, radios.length - 1));
+          radios[index].click();
         }
-        const index = Math.max(0, Math.min(i + delta, radios.length - 1));
-        radios[index].click();
       }
     }
   },
@@ -333,5 +350,18 @@ main {
       }
     }
   }
+}
+
+// HACK: should be refactored into separate component
+.blackout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--body-text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

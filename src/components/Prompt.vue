@@ -1,6 +1,13 @@
 <template>
   <div class="prompt__scrim">
-    <div class="prompt">
+    <div class="prompt" v-if="currentPrompt.title">
+      <h2 class="prompt__title">{{ currentPrompt.title }}</h2>
+      <div class="prompt__options">
+        <span>[Y]es</span>
+        <span>[N]o</span>
+      </div>
+    </div>
+    <div class="prompt" v-else>
       <h2 class="prompt__title">Update {{ currentPrompt.property }}:</h2>
       <div class="prompt__values" v-if="values">
         <label
@@ -82,11 +89,12 @@ export default {
   }
   &__input,
   &__values {
-    margin: 1em 0;
+    margin-top: 1em;
     min-width: 30ch;
     width: 100%;
   }
   &__options {
+    margin-top: 1em;
     display: flex;
     justify-content: space-between;
   }
