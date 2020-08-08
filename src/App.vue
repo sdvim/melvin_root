@@ -128,10 +128,13 @@ export default {
           const value = item
             .querySelector(".stat__value")
             .getAttribute("data-value");
+          const values = item
+            .querySelector(".stat__value")
+            .getAttribute("data-values");
           const type = item
             .querySelector(".stat__value")
             .getAttribute("data-type");
-          this.currentPrompt = { property, value, type };
+          this.currentPrompt = { property, value, values, type };
           return;
         }
         if (this.currentPrompt) {
@@ -148,6 +151,21 @@ export default {
             return;
           }
         }
+      }
+      if (this.currentPrompt && verticalKeys.includes(event.key)) {
+        const radios = document.querySelectorAll(
+          '.prompt__label input[type="radio"]'
+        );
+        const delta = event.key === "ArrowUp" ? -1 : 1;
+        let i;
+        for (i = 0; i < radios.length; i++) {
+          if (radios[i].checked) {
+            radios[i].checked = false;
+            break;
+          }
+        }
+        const index = Math.max(0, Math.min(i + delta, radios.length - 1));
+        radios[index].click();
       }
     }
   },

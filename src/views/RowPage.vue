@@ -19,6 +19,7 @@
           v-if="item.value !== undefined"
           :data-type="item.type"
           :data-value="item.value"
+          :data-values="item.values ? item.values.toString() : null"
           >{{ normalize(item) }}</span
         >
       </li>
