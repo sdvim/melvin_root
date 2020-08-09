@@ -20,14 +20,14 @@
       <router-view />
     </main>
     <footer class="footer">
-      <ul class="footer__keys">
+      <ul class="footer__keys" v-if="this.$store.state.string_pairs">
         <li
-          v-for="(title, key) in $root.strings.footer_keys"
-          :key="`key-${key}`"
+          v-for="pair in this.$store.state.string_pairs.footer_keys"
+          :key="`key-${pair.k}`"
           class="shortcut"
         >
-          <span class="shortcut__key" v-html="key">{{ key }}</span>
-          <span class="shortcut__title">{{ title }}</span>
+          <span class="shortcut__key" v-html="pair.k">{{ pair.k }}</span>
+          <span class="shortcut__title">{{ pair.v }}</span>
         </li>
       </ul>
       <div class="footer__info">

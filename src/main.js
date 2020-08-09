@@ -14,7 +14,12 @@ new Vue({
   },
   computed: {
     strings() {
-      return this.$store.state.strings;
+      if (!this.$store.state.strings.length) return false;
+      const keys = {};
+      this.$store.state.strings.forEach(pair => {
+        keys[pair.k] = pair.v;
+      });
+      return keys;
     }
   },
   render: h => h(App)

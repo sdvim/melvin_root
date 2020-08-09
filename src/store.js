@@ -11,11 +11,10 @@ export default new Vuex.Store({
     strings: {}
   },
   mutations: {
-    SET_PAGES: (state, pages) => {
-      state.pages = pages;
-    },
-    SET_STRINGS: (state, strings) => {
-      state.strings = strings;
+    SET_STATE: (state, data) => {
+      Object.entries(data).forEach(entry => {
+        state[entry[0]] = entry[1];
+      });
     },
     UPDATE_ROW: (state, updatedRow) => {
       const page = state.pages.find(p => p.title === router.currentRoute.name);
@@ -27,8 +26,7 @@ export default new Vuex.Store({
   actions: {
     setData() {
       axios.get("https://api.npoint.io/72bda29bf37b679bf564").then(response => {
-        this.commit("SET_PAGES", response.data.pages);
-        this.commit("SET_STRINGS", response.data.strings);
+        this.commit("SET_STATE", response.data);
       });
     },
     updateRow({ commit }, row) {
